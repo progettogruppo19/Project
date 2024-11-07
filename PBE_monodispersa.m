@@ -11,7 +11,7 @@ global N
 kd = 1/200; %[1/s]
 N = 1000;
 chain_length = 1:1000;
-x=1:1:N; % chain length vector 
+x=1:0:N; % chain length vector 
 
 %Monodisperse distribution
 
@@ -58,16 +58,16 @@ figure(1)
 
 plot(chain_length, P(50,:).*1e4, 'LineWidth',1.6, 'Color','black')
 hold on
-plot(x,Pn_matrix(6,:).*1e4,"o", 'Color','black')
+plot(chain_length,Pn_matrix(6,:).*1e4,"o", 'Color','black')
 
-plot(chain_length, P(100,:).*1e4, 'LineWidth',1.6, 'Color','blue')
-plot(x,Pn_matrix(11,:).*1e4,"o", 'Color','blue')
+plot(chain_length, P(100,:).*1e4, 'LineWidth',1.6, 'Color','[0.3 0.2 0.8]')
+plot(chain_length,Pn_matrix(11,:).*1e4,"o", 'Color','[0.3 0.2 0.8]')
 
-plot(chain_length, P(250,:).*1e4, 'LineWidth',1.6, 'Color','green')
-plot(x,Pn_matrix(26,:).*1e4,"o", 'Color','green')
+plot(chain_length, P(250,:).*1e4, 'LineWidth',1.6, 'Color','[0.8 0.2 0.3]')
+plot(chain_length,Pn_matrix(26,:).*1e4,"o", 'Color','[0.8 0.2 0.3]')
 
-plot(chain_length, P(500,:).*1e4, 'LineWidth',1.6, 'Color','magenta')
-plot(x,Pn_matrix(50,:).*1e4,"o", 'Color','magenta')
+plot(chain_length, P(500,:).*1e4, 'LineWidth',1.6, 'Color','[0.3 0.8 0.2]')
+plot(chain_length(1:2:end),Pn_matrix(50,1:2:end).*1e4,"o", 'Color','[0.3 0.8 0.2]')
 axis([5 1000 0 750])
 legend('Teta = 50 - Exact Solution','Teta = 50 - Analytical Solution', 'Teta = 100 - Exact Solution','Teta = 100 - Analytical Solution','Teta = 250 - Exact Solution', 'Teta = 250 - Analytical Solution', 'Teta = 500 - Exact Solution', 'Teta = 500 - Analytical Solution')
 title('Mono Dispersed Distribution')

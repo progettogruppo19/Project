@@ -60,14 +60,14 @@ figure(1)
 
 plot(chain_length, P0.*1e4, 'LineWidth',1.6, 'Color','black')
 hold on
-plot(chain_length, P(10,:).*1e4, 'LineWidth',1.6, 'Color','blue')
-plot(chain_length,Pn_matrix(10,:).*1e4,"o",  'Color','blue')
+plot(chain_length, P(10,:).*1e4, 'LineWidth',1.6, 'Color','[0.3 0.2 0.8]')
+plot(chain_length,Pn_matrix(10,:).*1e4,"o",  'Color','[0.3 0.2 0.8]')
 
-plot(chain_length, P(25,:).*1e4, 'LineWidth',1.6, 'Color','green')
-plot(chain_length,Pn_matrix(25,:).*1e4,"o", 'Color', 'green')
+plot(chain_length, P(25,:).*1e4, 'LineWidth',1.6, 'Color','[0.8 0.2 0.3]')
+plot(chain_length,Pn_matrix(25,:).*1e4,"o", 'Color', '[0.8 0.2 0.3]')
 
-plot(chain_length, P(45,:).*1e4, 'LineWidth',1.6, 'Color','magenta')
-plot(chain_length,Pn_matrix(45,:).*1e4,"o", 'Color','magenta')
+plot(chain_length, P(45,:).*1e4, 'LineWidth',1.6, 'Color','[0.3 0.8 0.2]')
+plot(chain_length,Pn_matrix(45,:).*1e4,"o", 'Color','[0.3 0.8 0.2]')
 
 axis([3 100 0 600])
 legend('Teta = 0', 'Teta = 100 - Exact Solution','Teta = 100 - Analytical Solution','Teta = 250 - Exact Solution','Teta = 250 - Analytical Solution','Teta = 500 - Exact Solution', 'Teta = 500 - Analytical Solution')
