@@ -66,8 +66,7 @@ figure(1)
 plot(chain_length(2), P0(2)*1e4, 'o', 'LineWidth',1.6)
 hold on
 
-
-title('Chain Length Distribution at teta = 0')
+title('Chain Length Distribution at Teta = 0')
 xlabel('Chain Length')
 ylabel('Normalized Concentration N*10^4')
 
@@ -104,7 +103,7 @@ plot(teta_1,Pn_matrix(:,999).*1e4,"o",'Color',cc(5,:))
 plot(teta,N(:,2000).*1e4, 'LineWidth',1.6, 'Color',cc(6,:))
 plot(teta_1,Pn_matrix(:,1999).*1e4,"o",'Color',cc(6,:))
 axis([0 6000 0 8])
-xlabel('Dimensionless Time (teta)')
+xlabel('Dimensionless Time (Teta)')
 ylabel('Normalized Concentration N*10^4')
 legend('P0 2 Exact', 'P0 2 Analytical', 'P0 50 Exact', 'P0 50 Analytical','P0 100 Exact', 'P0 100 Analytical','P0 500 Exact', 'P0 500 Analytical','P0 1000 Exact','P0 1000 Analytical','P0 2000 Exact', 'P0 2000 Analytical')
 
