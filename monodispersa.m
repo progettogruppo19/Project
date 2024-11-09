@@ -62,13 +62,15 @@ plot(x,Pn_matrix(11,:).*1e4,"o",'Color',cc(2,:))
 plot(x,Pn_matrix(26,:).*1e4,"o",'Color',cc(3,:))
 plot(x,Pn_matrix(50,:).*1e4,"o",'Color',cc(4,:))
 
+
 plot(chain_length, N(50,:).*1e4, 'LineWidth',1.6, 'Color','black')
 hold on
 plot(chain_length, N(100,:).*1e4, 'LineWidth',1.6)
 plot(chain_length, N(250,:).*1e4, 'LineWidth',1.6)
 plot(chain_length, N(500,:).*1e4, 'LineWidth',1.6)
+legend('teta=50','teta= 100','teta=250','teta=500', 'teta=50 exact', 'teta=100 exact', 'teta=250 exact','teta=500 exact')
 axis([2.3 1000 0 750])
-legend('Teta = 50', 'Teta = 100','Teta = 250','Teta = 500')
+
 title('Monodisperse Distribution')
 xlabel('Chain Length')
 ylabel('Normalized Concentration N*10^4')
