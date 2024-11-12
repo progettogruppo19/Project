@@ -60,10 +60,11 @@ end
 Pn_matrix = Pn_total(:, 2:end);
 
 %% Plots
-
 figure(1)
-
-plot(chain_length, P0 .* 1e4, 'LineWidth',1.2, 'Color','black')
+subplot(1,2,1);
+plot(chain_length, P(51,:).*1e4, 'LineWidth',1.6, 'Color', 'black')
+hold on
+plot(chain_length,Pn_matrix(50,:).*1e4,"o", 'Color','black')
 hold on
 plot(chain_length, P(101,:) .* 1e4, 'LineWidth',1.2, 'Color','[0.3 0.2 0.8]')
 plot(chain_length, Pn_matrix(100,:) .* 1e4, "o", 'Color','[0.3 0.2 0.8]')
@@ -74,9 +75,29 @@ plot(chain_length, Pn_matrix(250,:) .* 1e4, "o", 'Color', '[0.8 0.2 0.3]')
 plot(chain_length, P(501,:) .* 1e4, 'LineWidth',1.2, 'Color','[0.3 0.8 0.2]')
 plot(chain_length, Pn_matrix(500,:) .* 1e4, "o", 'Color','[0.3 0.8 0.2]')
 
-axis([50 950 0 50]) 
-legend('Teta = 0', 'Teta = 100 - Exact Solution', 'Teta = 100 - Analytical Solution', 'Teta = 250 - Exact Solution', 'Teta = 250 - Analytical Solution', 'Teta = 500 - Exact Solution', 'Teta = 500 - Analytical Solution')
-title('Gamma-mono Distribution')
+axis([50 1000 0 500]) 
+legend('Teta = 50-Exact solution', 'Teta= 50-Analytical solution', 'Teta = 100-Exact Solution', 'Teta= 100-Analytical Solution', 'Teta = 250-Exact Solution', 'Teta = 250-Analytical Solution', 'Teta = 500 - Exact Solution', 'Teta = 500 - Analytical Solution')
+title('Mixed model: Monodisperse+ Gamma Distribution')
+xlabel('Chain Length')
+ylabel('Normalized Concentration N*10^4')
+
+subplot(1,2,2);
+plot(chain_length, P(51,:).*1e4, 'LineWidth',1.6, 'Color', 'black')
+hold on
+plot(chain_length,Pn_matrix(50,:).*1e4,"o", 'Color','black')
+hold on
+plot(chain_length, P(101,:) .* 1e4, 'LineWidth',1.2, 'Color','[0.3 0.2 0.8]')
+plot(chain_length, Pn_matrix(100,:) .* 1e4, "o", 'Color','[0.3 0.2 0.8]')
+
+plot(chain_length, P(251,:) .* 1e4, 'LineWidth',1.2, 'Color','[0.8 0.2 0.3]')
+plot(chain_length, Pn_matrix(250,:) .* 1e4, "o", 'Color', '[0.8 0.2 0.3]')
+
+plot(chain_length, P(501,:) .* 1e4, 'LineWidth',1.2, 'Color','[0.3 0.8 0.2]')
+plot(chain_length, Pn_matrix(500,:) .* 1e4, "o", 'Color','[0.3 0.8 0.2]')
+
+axis([50 1000 0 50]) 
+legend('Teta = 50-Exact solution', 'Teta= 50-Analytical solution', 'Teta = 100-Exact Solution', 'Teta= 100-Analytical Solution', 'Teta = 250-Exact Solution', 'Teta = 250-Analytical Solution', 'Teta = 500 - Exact Solution', 'Teta = 500 - Analytical Solution')
+title('Mixed model: Monodisperse+ Gamma Distribution')
 xlabel('Chain Length')
 ylabel('Normalized Concentration N*10^4')
 
