@@ -78,8 +78,9 @@ Pn_matrix = Pn_total(:, 2:end);
 
 figure(1)
 
-plot(chain_length, P0 .* 1e4, 'LineWidth',1.2, 'Color','black')
+plot(chain_length, P(51,:) .* 1e4, 'LineWidth',1.2, 'Color','black')
 hold on
+plot(chain_length, Pn_matrix(50,:) .* 1e4, "o", 'Color','black')
 plot(chain_length, P(101,:) .* 1e4, 'LineWidth',1.2, 'Color','[0.3 0.2 0.8]')
 plot(chain_length, Pn_matrix(100,:) .* 1e4, "o", 'Color','[0.3 0.2 0.8]')
 
@@ -90,8 +91,8 @@ plot(chain_length, P(501,:) .* 1e4, 'LineWidth',1.2, 'Color','[0.3 0.8 0.2]')
 plot(chain_length, Pn_matrix(500,:) .* 1e4, "o", 'Color','[0.3 0.8 0.2]')
 
 axis([0 max(chain_length) 0 7.2]) 
-legend('Teta = 0', 'Teta = 100 - Exact Solution', 'Teta = 100 - Analytical Solution', 'Teta = 250 - Exact Solution', 'Teta = 250 - Analytical Solution', 'Teta = 500 - Exact Solution', 'Teta = 500 - Analytical Solution')
-title('Gamma4 Distribution')
+legend('Teta = 50-Exact Solution', 'Teta = 50-Analytical Solution', 'Teta = 100 - Exact Solution', 'Teta = 100 - Analytical Solution', 'Teta = 250 - Exact Solution', 'Teta = 250 - Analytical Solution', 'Teta = 500 - Exact Solution', 'Teta = 500 - Analytical Solution')
+title('\Sigma_4 Gamma Distribution')
 xlabel('Chain Length')
 ylabel('Normalized Concentration N*10^4')
 
