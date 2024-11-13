@@ -6,13 +6,15 @@ clc
 
 %% Data 
 
-global P0 maxCL x teta_span
+global P0 maxCL x teta_span N P0_pbe P_pbe
 
 kd = 1/200; 
 D = 1.5;
 xn = 1000; 
 maxCL = 5000;
 x = linspace(1,maxCL,maxCL);
+N = 5000;
+chain_length = 1:5000;
 
 %% Resolution
 
@@ -29,6 +31,13 @@ for n = 1:length(x)
     P0(n) = y^2/gamma*n^(z-1)*exp(-y*n);
    
 end
+
+%PBE
+
+P0_pbe = y.^z./gamma.*chain_length.^(z-1).*exp(-y.*chain_length); 
+lambda0_in_pbe = sum(P0_pbe);
+lambda1_in_pbe = sum(chain_length.*P0_pbe);
+lambda2_in_pbe = sum(chain_length.^2.*P0_pbe);
 
 %Inital conditions 
 
@@ -69,44 +78,65 @@ xn_2 = lambda1_1./lambda0_1;
 xm_2 = lambda2_1./lambda1_1;
 D_2 = xm_2./xn_2;
 
+%PBE
+
+[teta_pbe, P_pbe] = ode15s(@PBE, teta_span, P0_pbe);
+
+initialcond_pbe = [lambda0_in_pbe lambda1_in_pbe lambda2_in_pbe 0];
+[teta_pbe_2, y_pbe] = ode15s(@lambda, teta_span, initialcond_pbe);
+
+% Estrai i risultati
+t_ad_pbe = teta_pbe_2';
+lambda0_pbe = y_pbe(:,1);
+lambda1_pbe = y_pbe(:,2);
+lambda2_pbe = y_pbe(:,3);
+M_pbe = y(:,4);
+
 %% Plots 
 
 figure(1)
-plot(t_ad,lambda0',LineWidth=2)
+plot(t_ad,lambda0','-^b','LineWidth',2)
 hold on
-plot(t_ad_1,lambda0_1',LineWidth=2)
+plot(t_ad_1,lambda0_1','-^r','LineWidth',2)
+plot(t_ad_pbe, lambda0_pbe','Color','black', LineWidth=2)
 title('Lambda 0')
 xlabel('Dimensionless time (Teta)')
 ylabel('Lambda 0')
 axis([0 500 0 1.2])
-legend('Solution considering P2', 'Solution without considering P2')
+legend('Solution considering P2', 'Solution without considering P2', 'Exact solution')
 
 figure(2)
-plot(t_ad,lambda1',LineWidth=2)
+plot(t_ad,lambda1','-^b',LineWidth=2)
 hold on
-plot(t_ad_1,lambda1_1',"o",LineWidth=2)
+plot(t_ad_1,lambda1_1','-^r',LineWidth=2)
+plot(t_ad_pbe, lambda1_pbe','Color','black', LineWidth=2)
 title('Lambda 1')
 xlabel('Dimensionless time (Teta)')
 ylabel('Lambda 1')
 xlim([0 500])
-legend('Solution considering P2', 'Solution without considering P2')
+legend('Solution considering P2', 'Solution without considering P2', 'Exact solution')
 
 figure(3)
-plot(t_ad,lambda2',LineWidth=2)
+plot(t_ad,lambda2','-^b',LineWidth=2)
 hold on
-plot(t_ad_1,lambda2_1',"o",LineWidth=2)
+plot(t_ad_1,lambda2_1','-^r',LineWidth=2)
+plot(t_ad_pbe, lambda2_pbe','Color','black', LineWidth=2)
 title('Lambda 2')
 xlabel('Dimensionless time (Teta)')
 ylabel('Lambda 2')
 xlim([0 500])
-legend('Solution considering P2', 'Solution without considering P2')
+legend('Solution considering P2', 'Solution without considering P2', 'Exact solution')
 
 figure(4)
 plot(t_ad,M',LineWidth=2)
+hold on
+plot(t_ad,M_1',LineWidth=2)
+plot(t_ad, M_pbe','Color','black', LineWidth=2)
 xlabel('Dimensionless time (Teta)')
 ylabel('Monomer concentration')
 title('M')
 xlim([0 500])
+legend('Solution considering P2', 'Solution without considering P2', 'Exact solution')
 
 figure(5)
 plot(t_ad, yield_1, LineWidth=2)
@@ -133,6 +163,8 @@ ylabel('Dispersity')
 axis([0 500 1.4 1.9])
 
 %% Functions 
+
+%MOM with P2
 
 function mom = MOM_fun(teta,y)
 
@@ -199,6 +231,8 @@ mom = [dl0dteta dl1dteta dl2dteta dMdteta]';
 
 end
 
+%MOM without P2
+
 function mom = MOM_fun_no_P2(teta,y)
 
 global P0 maxCL x teta_span
@@ -261,3 +295,41 @@ dMdteta = lambda0;
 mom = [dl0dteta dl1dteta dl2dteta dMdteta]';
 
 end
+
+% Funzione per PBE
+function dPdteta = PBE(teta, P)
+    global N 
+
+    % Inizializza dPdteta
+    dPdteta = zeros(N,1);
+
+    % PBEs
+    dPdteta(1) = sum(P(3:N)) + 2 * P(2);
+
+    for n = 2:N-1
+        dPdteta(n) = P(n+1) - P(n);
+    end
+
+    dPdteta(N) = -P(N);
+end
+
+% Funzione per lambda
+function F = lambda(teta, y)
+
+global P_pbe
+
+    lambda0 = y(1);
+    lambda1 = y(2);
+    lambda2 = y(3);
+    M = y(4);
+
+    P2 = P_pbe(end,2);
+
+    % Equazioni
+    dl0dteta = -P2;
+    dl1dteta = -lambda0 - P2; 
+    dl2dteta = -2*lambda1 + lambda0 - P2; 
+    dMdteta = lambda0 + P2; 
+    F = [dl0dteta; dl1dteta; dl2dteta; dMdteta];
+end
+
